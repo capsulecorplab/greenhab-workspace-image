@@ -1,8 +1,8 @@
-# Artifactory Workspace (Kasm Image)
+# GreenHab Workspace (Kasm Image)
 
 ## Introduction
 
-This repo provides an Immutable-Infrastructure-as-Code (IIaC) workspace for generating artifacts based on the [Ansible based template for KASM Ubuntu Focal Images](https://github.com/j-simmons-phd/kasm-core-focal-template) template provided by @j-simmons-phd.  The workspace is configured with the following software:
+This repo provides an Immutable-Infrastructure-as-Code (IIaC) workspace for the Mars Desert Research Center (MDRS) GreenHab based on the [Ansible based template for KASM Ubuntu Focal Images](https://github.com/j-simmons-phd/kasm-core-focal-template) template provided by @j-simmons-phd.  The workspace is configured with the following software:
 
 - git cli
 - [Keychain](https://www.funtoo.org/Keychain)
@@ -35,13 +35,13 @@ From a bash terminal,
 1. Clone this repo
 
 ```bash
-git clone https://github.com/capsulecorplab/artifactory-workspace-image.git
+git clone https://github.com/capsulecorplab/greenhab-workspace-image.git
 ```
 
-2. Change directory into `artifactory-workspace-image`.
+2. Change directory into `greenhab-workspace-image`.
 
 ```bash
-cd artifactory-workspace-image
+cd greenhab-workspace-image
 ```
 
 3. Run `docker-compose pull` (Note: Linux users may need to prepend this command with `sudo`) to pull the published version of the workspace image or run `docker-compose build` to build the image locally.
