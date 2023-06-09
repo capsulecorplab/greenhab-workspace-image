@@ -1,5 +1,7 @@
 # MDRS Workspace (Kasm Image)
 
+![Screenshot from 2023-06-09 09-48-15](https://github.com/capsulecorplab/mdrs-workspace-image/assets/14095576/0f7832dd-5ae3-4dba-8250-717fce19c81f)
+
 ## Introduction
 
 This repo provides an Immutable-Infrastructure-as-Code (IIaC) workspace for the Mars Desert Research Station (MDRS) based on the [Ansible based template for KASM Ubuntu Focal Images](https://github.com/j-simmons-phd/kasm-core-focal-template) template provided by @j-simmons-phd.  The workspace is configured with the following software:
