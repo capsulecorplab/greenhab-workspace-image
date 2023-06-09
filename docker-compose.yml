@@ -3,7 +3,7 @@ version: "3.7"
 services:
   kasm:
     build: .
-    image: ghcr.io/capsulecorplab/greenhab-workspace-image:main
+    image: ghcr.io/capsulecorplab/mdrs-workspace-image:main
     ports:
       - "6901:6901"
     environment:
