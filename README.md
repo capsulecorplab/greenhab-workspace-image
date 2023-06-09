@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This repo provides an Immutable-Infrastructure-as-Code (IIaC) workspace for the Mars Desert Research Center (MDRS) based on the [Ansible based template for KASM Ubuntu Focal Images](https://github.com/j-simmons-phd/kasm-core-focal-template) template provided by @j-simmons-phd.  The workspace is configured with the following software:
+This repo provides an Immutable-Infrastructure-as-Code (IIaC) workspace for the Mars Desert Research Station (MDRS) based on the [Ansible based template for KASM Ubuntu Focal Images](https://github.com/j-simmons-phd/kasm-core-focal-template) template provided by @j-simmons-phd.  The workspace is configured with the following software:
 
 - git cli
 - [Keychain](https://www.funtoo.org/Keychain)
