@@ -59,7 +59,7 @@
   hosts: localhost
   connection: local
   tags:
-  - install_generator_plantuml
+  - install_plantuml
   - install_generator_asciidoctor
   - install_doctools
 
@@ -262,11 +262,11 @@
   connection: local
   gather_facts: yes
   tags:
-  - install_generator_plantuml
+  - install_plantuml
   - install_doctools
 
   vars:
-    jdk_version: 2:1.11-72
+    jdk_version: 2:1.11-72build2
     graphviz_version_expected: "dot - graphviz version 2.50.0 (20211204.2007)"
 
   tasks:
