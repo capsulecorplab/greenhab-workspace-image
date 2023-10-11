@@ -186,6 +186,7 @@
         - notebook
         - voila
         - pint
+        - pypdf2
 
 -
   # install ASCII Doctor
