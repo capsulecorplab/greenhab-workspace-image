@@ -141,6 +141,44 @@
       dest: /home/kasm-default-profile/
 
 -
+  # install PrusaSlicer
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  tags:
+    - install_oshw_tools
+
+  vars:
+    - prusaslicer_version: "2.6.1"
+    - prusaslicer_dir: "PrusaSlicer-{{ prusaslicer_version }}+linux-x64-GTK3-202309060711"
+
+  tasks:
+  - name: Join parts of PrusaSlicer tarball
+    shell: cat /home/kasm-default-profile/install_files/{{ prusaslicer_dir }}.tar.bz2.parta* > /home/kasm-default-profile/install_files/{{ prusaslicer_dir }}.tar.bz2
+  - name: Extract PrusaSlicer for 64-bit Linux to /opt
+    unarchive:
+      src: /home/kasm-default-profile/install_files/{{ prusaslicer_dir }}.tar.bz2
+      dest: /opt
+      remote_src: yes
+      creates: /opt/{{ prusaslicer_dir }}/bin/prusa-slicer
+  - name: Create symlink for prusa-slicer in /usr/local/bin
+    shell: ln -srv /opt/{{ prusaslicer_dir }}/bin/prusa-slicer /usr/local/bin/prusa-slicer
+  - name: Create local application folder for PrusaSlicer
+    shell: mkdir -p /home/kasm-default-profile/.local/share/applications/
+  - name: Configure PrusaSlicer desktop shortcut
+    shell: echo "[Desktop Entry]\nName=PrusaSlicer\nGenericName=PrusaSlicer\nExec=/usr/local/bin/prusa-slicer\nIcon=/opt/{{ prusaslicer_dir }}/resources/icons/PrusaSlicer.png\nTerminal=false\nType=Application\nStartupNotify=false\nCategories=Application;Development;" > /home/kasm-default-profile/.local/share/applications/prusaslicer.desktop
+  - name: Get prusa-slicer version
+    shell: prusa-slicer --help | grep PrusaSlicer- | awk '{ print $1 '}
+    register: installed_prusaslicer_version
+  - name: Display prusa-slicer version
+    debug:
+      msg: "prusa-slicer = {{ installed_prusaslicer_version.stdout }}"
+  - name: Test prusa-slicer version
+    fail:
+      msg: "prusa-slicer Error: Expected {{ prusaslicer_dir }} | Found {{ installed_prusaslicer_version.stdout }}"
+    when: installed_prusaslicer_version.stdout != prusaslicer_dir
+
+-
   # install Python packages with pip
   hosts: localhost
   connection: local
