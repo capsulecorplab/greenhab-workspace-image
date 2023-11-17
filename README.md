@@ -8,7 +8,7 @@ This repo provides an Immutable-Infrastructure-as-Code (IIaC) workspace for the 
 
 - git cli
 - [Keychain](https://www.funtoo.org/Keychain)
-- Chrome
+- Firefox
 - Python 3.8.x (part of the image template) with the following packages (not part of the image template)
     - pip
     - [JupyterLab](https://jupyter.org/)
