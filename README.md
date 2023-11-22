@@ -20,6 +20,7 @@ This repo provides an Immutable-Infrastructure-as-Code (IIaC) workspace for the 
     - [Python extension by Microsoft](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
     - [Dendron](https://marketplace.visualstudio.com/items?itemName=dendron.dendron)
     - [Foam](https://marketplace.visualstudio.com/items?itemName=foam.foam-vscode)
+    - [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
 - Artifact Generators
     - [PlantUML](https://plantuml.com/)
         - JDK v11
