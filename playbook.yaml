@@ -265,6 +265,25 @@
       msg: "ASCII Doctor Version Error: Expected {{ asciidoctor_version_expected }} | Found {{ installed_asciidoctor_version.stdout }}"
     when: installed_asciidoctor_version.stdout != asciidoctor_version_expected
 
+-
+  # install QOwnNotes
+  hosts: localhost
+  connection: local
+  tags:
+  - install_doctools
+
+  vars:
+    qownnotes_version: "23.11.2"
+    qownnotes_version_to_install: "{{ qownnotes_version }}-1ubuntu3ppa1~jammy1"
+
+  tasks:
+  - name: Add qownnotes PPA
+    shell: add-apt-repository ppa:pbek/qownnotes
+  - name: Install QOwnNotes
+    apt:
+      name: "qownnotes={{ qownnotes_version_to_install }}"
+      update_cache: yes
+
 - 
   # install sudo for the vs-code role below 
   hosts: localhost
