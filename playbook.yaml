@@ -273,7 +273,7 @@
   - install_doctools
 
   vars:
-    qownnotes_version: "23.11.2"
+    qownnotes_version: "23.11.3"
     qownnotes_version_to_install: "{{ qownnotes_version }}-1ubuntu3ppa1~jammy1"
 
   tasks:
@@ -323,6 +323,7 @@
             - ms-python.python
             - dendron.dendron
             - foam.foam-vscode
+            - eamodio.gitlens
           visual_studio_code_settings_overwrite: yes
           visual_studio_code_settings: {
             "extensions.ignoreRecommendations": true,
