@@ -27,7 +27,7 @@ This repo provides an Immutable-Infrastructure-as-Code (IIaC) workspace for the 
         - Graphviz 2.50 (built from source)
     - [AsciiDoctor](https://asciidoctor.org/) v2.0.17 with PlantUML and PDF support
 - Open Source Hardware tools
-    - [PrusaSlicer](https://github.com/prusa3d/PrusaSlicer) 2.6.1
+    - [PrusaSlicer](https://github.com/prusa3d/PrusaSlicer) 2.7.0
 
 ## Requirements
 
