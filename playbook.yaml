@@ -206,6 +206,24 @@
     when: installed_prusaslicer_version.stdout != prusaslicer_dir
 
 -
+  # install OpenSCAD
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  tags:
+    - install_oshw_tools
+    - install_openscad
+
+  vars:
+    openscad_version: "2021.01"
+    openscad_version_to_install: "{{ openscad_version }}-4build1"
+
+  tasks:
+  - name: Install openscad
+    apt:
+      name: "openscad={{ openscad_version_to_install }}"
+
+-
   # install Python packages with pip
   hosts: localhost
   connection: local
