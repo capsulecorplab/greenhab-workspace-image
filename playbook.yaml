@@ -222,6 +222,16 @@
   - name: Install openscad
     apt:
       name: "openscad={{ openscad_version_to_install }}"
+  - name: Get OpenSCAD version
+    shell: openscad --info | grep 'OpenSCAD Version' | awk '{ print $3 '}
+    register: installed_openscad_version
+  - name: Display OpenSCAD version
+    debug:
+      msg: "OpenSCAD = {{ installed_openscad_version.stdout }}"
+  - name: Test OpenSCAD version
+    fail:
+      msg: "OpenSCAD Version Error: Expected {{ openscad_version }} | Found {{ installed_openscad_version.stdout }}"
+    when: installed_openscad_version.stdout != openscad_version
 
 -
   # install Python packages with pip
