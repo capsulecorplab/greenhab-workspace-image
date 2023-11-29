@@ -8,6 +8,7 @@ on:
   push:
     paths-ignore:
       - 'devResources/**'
+      - 'docker-compose.yml'
       - '.gitignore'
       - 'LICENSE.md'
       - 'README.md'
@@ -15,6 +16,7 @@ on:
     branches: [ main ]
     paths-ignore:
       - 'devResources/**'
+      - 'docker-compose.yml'
       - '.gitignore'
       - 'LICENSE.md'
       - 'README.md'
