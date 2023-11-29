@@ -28,6 +28,7 @@ This repo provides an Immutable-Infrastructure-as-Code (IIaC) workspace for the 
     - [AsciiDoctor](https://asciidoctor.org/) v2.0.17 with PlantUML and PDF support
 - Open Source Hardware tools
     - [PrusaSlicer](https://github.com/prusa3d/PrusaSlicer) 2.7.0
+    - [OpenSCAD](https://openscad.org/) 2021.01
 
 ## Requirements
 
