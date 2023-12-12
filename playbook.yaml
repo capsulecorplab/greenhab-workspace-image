@@ -190,10 +190,8 @@
       creates: /opt/{{ prusaslicer_dir }}/bin/prusa-slicer
   - name: Create symlink for prusa-slicer in /usr/local/bin
     shell: ln -srv /opt/{{ prusaslicer_dir }}/bin/prusa-slicer /usr/local/bin/prusa-slicer
-  - name: Create local application folder for PrusaSlicer
-    shell: mkdir -p /home/kasm-default-profile/.local/share/applications/
   - name: Configure PrusaSlicer desktop shortcut
-    shell: echo "[Desktop Entry]\nName=PrusaSlicer\nGenericName=PrusaSlicer\nExec=/usr/local/bin/prusa-slicer\nIcon=/opt/{{ prusaslicer_dir }}/resources/icons/PrusaSlicer.png\nTerminal=false\nType=Application\nStartupNotify=false\nCategories=Application;Development;" > /home/kasm-default-profile/.local/share/applications/prusaslicer.desktop
+    shell: echo "[Desktop Entry]\nName=PrusaSlicer\nGenericName=PrusaSlicer\nExec=/usr/local/bin/prusa-slicer\nIcon=/opt/{{ prusaslicer_dir }}/resources/icons/PrusaSlicer.png\nTerminal=false\nType=Application\nStartupNotify=false\nCategories=Application;Development;" > /usr/share/applications/prusaslicer.desktop
   - name: Get prusa-slicer version
     shell: prusa-slicer --help | grep PrusaSlicer- | awk '{ print $1 '}
     register: installed_prusaslicer_version
@@ -303,7 +301,7 @@
   - install_doctools
 
   vars:
-    qownnotes_version: "23.11.3"
+    qownnotes_version: "23.12.2"
     qownnotes_version_to_install: "{{ qownnotes_version }}-1ubuntu3ppa1~jammy1"
 
   tasks:
