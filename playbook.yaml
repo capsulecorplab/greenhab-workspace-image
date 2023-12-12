@@ -301,7 +301,7 @@
   - install_doctools
 
   vars:
-    qownnotes_version: "23.11.3"
+    qownnotes_version: "23.12.2"
     qownnotes_version_to_install: "{{ qownnotes_version }}-1ubuntu3ppa1~jammy1"
 
   tasks:
