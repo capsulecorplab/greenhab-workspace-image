@@ -312,6 +312,24 @@
       name: "qownnotes={{ qownnotes_version_to_install }}"
       update_cache: yes
 
+-
+  # Install Pharo
+  hosts: localhost
+  connection: local
+  tags: install_pharo
+
+  tasks:
+  - name: Unzip Pharo
+    unarchive:
+      src: /home/kasm-default-profile/install_files/PharoLauncher-linux-3.0.1-x64.zip
+      dest: /opt
+      creates: /opt/pharolauncher/README.txt
+      remote_src: yes
+  - name: Create symlink for pharo-launcher in /usr/local/bin
+    shell: ln -srv /opt/pharolauncher/pharo-launcher /usr/local/bin/pharo-launcher
+  - name: Configure PharoLauncher desktop shortcut
+    shell: echo "[Desktop Entry]\nName=Pharo\nGenericName=Pharo\nExec=/opt/pharolauncher/pharo-launcher\nIcon=/opt/pharolauncher/icons/pharo-launcher.png\nTerminal=false\nType=Application\nStartupNotify=false\nCategories=Application;Development;" > /usr/share/applications/pharo.desktop
+
 - 
   # install sudo for the vs-code role below 
   hosts: localhost
