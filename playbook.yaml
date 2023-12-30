@@ -301,16 +301,24 @@
   - install_doctools
 
   vars:
-    qownnotes_version: "23.12.2"
-    qownnotes_version_to_install: "{{ qownnotes_version }}-1ubuntu3ppa1~jammy1"
+    qownnotes_version: "23.12.5"
 
   tasks:
-  - name: Add qownnotes PPA
-    shell: add-apt-repository ppa:pbek/qownnotes
-  - name: Install QOwnNotes
+  - name: Install QMake tools
     apt:
-      name: "qownnotes={{ qownnotes_version_to_install }}"
+      name: qt5-qmake, libqt5websockets5-dev, libqt5svg5*, qtdeclarative5-dev, libqt5x11extras5-dev
       update_cache: yes
+  - name: Expand source files archive
+    unarchive:
+      src: /home/kasm-default-profile/install_files/qownnotes-{{ qownnotes_version }}.tar.xz
+      dest: /home/kasm-default-profile/install_files/
+      remote_src: yes
+      creates: /home/kasm-default-profile/install_files/qownnotes-{{ qownnotes_version }}/LICENSE
+  - name: Build QOwnNotes # as per https://www.qownnotes.org/installation/building.html
+    shell:
+      cmd: qmake && make
+      chdir: /home/kasm-default-profile/install_files/qownnotes-{{ qownnotes_version }}
+      executable: /bin/bash
 
 - 
   # install sudo for the vs-code role below 
