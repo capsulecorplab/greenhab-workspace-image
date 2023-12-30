@@ -304,6 +304,10 @@
     qownnotes_version: "23.12.5"
 
   tasks:
+  - name: Install QMake tools
+    apt:
+      name: qt5-qmake, libqt5websockets5-dev, libqt5svg5*, qtdeclarative5-dev, libqt5x11extras5-dev
+      update_cache: yes
   - name: Expand source files archive
     unarchive:
       src: /home/kasm-default-profile/install_files/qownnotes-{{ qownnotes_version }}.tar.xz
