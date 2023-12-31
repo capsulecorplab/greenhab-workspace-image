@@ -339,6 +339,31 @@
     shell: ln -srv /opt/pharolauncher/pharo-launcher /usr/local/bin/pharo-launcher
   - name: Configure PharoLauncher desktop shortcut
     shell: echo "[Desktop Entry]\nName=Pharo\nGenericName=Pharo\nExec=/opt/pharolauncher/pharo-launcher\nIcon=/opt/pharolauncher/icons/pharo-launcher.png\nTerminal=false\nType=Application\nStartupNotify=false\nCategories=Application;Development;" > /usr/share/applications/pharo.desktop
+  - name: Create directory for cloning Roassal + Pharo image + vm
+    shell:
+      cmd: mkdir -p Pharo/images/Roassal
+      chdir: /home/kasm-default-profile/
+      executable: /bin/bash
+  - name: Clone Roassal repo
+    shell:
+      cmd: git clone https://github.com/pharo-graphics/Roassal
+      chdir: /home/kasm-default-profile/Pharo/images
+      executable: /bin/bash
+  - name: Download Pharo Image + VM in Roassal directory
+    shell:
+      cmd: curl https://get.pharo.org/100+vm | bash
+      chdir: /home/kasm-default-profile/Pharo/images/Roassal
+      executable: /bin/bash
+  - name: Rename Pharo.image to Roassal.image & Pharo.changes to Roassal.changes
+    shell:
+      cmd: mv Pharo.image Roassal.image && mv Pharo.changes Roassal.changes
+      chdir: /home/kasm-default-profile/Pharo/images/Roassal
+      executable: /bin/bash
+  - name: Load Roassal package from local src/ using Metacello
+    shell:
+      cmd: ./pharo Roassal.image eval --save "Metacello new baseline{{ ':' }} 'Roassal'; repository{{ ':' }} 'gitlocal{{ ':' }}//./src'; load."
+      chdir: /home/kasm-default-profile/Pharo/images/Roassal
+      executable: /bin/bash
 
 - 
   # install sudo for the vs-code role below 
