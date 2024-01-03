@@ -108,7 +108,9 @@
   hosts: localhost
   connection: local
   gather_facts: yes
-  tags: install_utilities
+  tags:
+    - install_utilities
+    - install_pharo
 
   vars:
     git_version: "2.43.0"
@@ -118,6 +120,10 @@
     keychain_version_expected: "{{ keychain_version }}.."
 
   tasks:
+  - name: Install unzip
+    apt:
+      name: unzip
+      update_cache: yes
   - name: Add git PPA
     shell: add-apt-repository ppa:git-core/ppa
   - name: Install git
@@ -318,6 +324,33 @@
     shell:
       cmd: qmake && make
       chdir: /home/kasm-default-profile/install_files/qownnotes-{{ qownnotes_version }}
+      executable: /bin/bash
+
+-
+  # Install Pharo
+  hosts: localhost
+  connection: local
+  environment:
+    PHARO: 110
+    ARCHITECTURE: 64
+  tags:
+    - install_pharo
+
+  tasks:
+  - name: Clone PharoLauncher
+    shell:
+      cmd: git clone https://github.com/pharo-project/pharo-launcher.git
+      chdir: /home/kasm-default-profile/install_files
+      executable: /bin/bash
+  - name: Checkout feature/cmd-line branch in pharo-launcher
+    shell:
+      cmd: git checkout feature/cmd-line
+      chdir: /home/kasm-default-profile/install_files/pharo-launcher
+      executable: /bin/bash
+  - name: Build PharoLauncher
+    shell:
+      cmd: ./build.sh prepare
+      chdir: /home/kasm-default-profile/install_files/pharo-launcher
       executable: /bin/bash
 
 - 
