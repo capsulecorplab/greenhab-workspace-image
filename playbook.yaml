@@ -340,17 +340,27 @@
   - name: Clone PharoLauncher
     shell:
       cmd: git clone https://github.com/pharo-project/pharo-launcher.git
-      chdir: /home/kasm-default-profile/install_files
+      chdir: /home/kasm-default-profile
       executable: /bin/bash
   - name: Checkout feature/cmd-line branch in pharo-launcher
     shell:
       cmd: git checkout feature/cmd-line
-      chdir: /home/kasm-default-profile/install_files/pharo-launcher
+      chdir: /home/kasm-default-profile/pharo-launcher
       executable: /bin/bash
-  - name: Build PharoLauncher
+  - name: Download Pharo 11.0 + VM in pharo-launcher
     shell:
-      cmd: ./build.sh prepare
-      chdir: /home/kasm-default-profile/install_files/pharo-launcher
+      cmd: curl https://get.pharo.org/110+vm | bash
+      chdir: /home/kasm-default-profile/pharo-launcher
+      executable: /bin/bash
+  - name: Rename Pharo.image to PharoLauncher.image
+    shell:
+      cmd: mv Pharo.image PharoLauncher.image
+      chdir: /home/kasm-default-profile/pharo-launcher
+      executable: /bin/bash
+  - name: Build PharoLauncher # as per https://github.com/pharo-project/pharo-launcher/blob/feature/cmd-line/build.sh#L31C2-L31C183
+    shell:
+      cmd: ./pharo PharoLauncher.image eval --save "Metacello new baseline{{ ':' }} 'PharoLauncher'; repository{{ ':' }} 'gitlocal{{ ':' }}//src'; ignoreImage; onConflictUseIncoming; onWarning{{ ':' }} [{{ ':' }}ex | ex load]; load"
+      chdir: /home/kasm-default-profile/pharo-launcher
       executable: /bin/bash
 
 - 
