@@ -374,6 +374,8 @@
       mode: a+x
   - name: Create symlink for pharo-launcher in /usr/local/bin
     shell: ln -srv /opt/pharo-launcher/pharo-launcher /usr/local/bin/pharo-launcher
+  - name: Configure PharoLauncher desktop shortcut
+    shell: echo "[Desktop Entry]\nName=Pharo\nGenericName=Pharo\nExec=pharo-launcher\nIcon=/opt/pharo-launcher/icons/pharo-launcher.png\nTerminal=false\nType=Application\nStartupNotify=false\nCategories=Application;Development;" > /usr/share/applications/pharo.desktop
 
 - 
   # install sudo for the vs-code role below 
