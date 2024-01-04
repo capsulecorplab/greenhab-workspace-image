@@ -205,6 +205,11 @@
       cmd: git checkout {{ fprime_workspace_image_version }}
       chdir: /home/kasm-default-profile/install_files/fprime-workspace-image
       executable: /bin/bash
+  - name: Copy contents of fprime-workspace-image/install_files into install_files
+    shell:
+      cmd: cp -rf fprime-workspace-image/install_files/* .
+      chdir: /home/kasm-default-profile/install_files
+      executable: /bin/bash
   - name: Install fprime tools with ansible-galaxy
     shell:
       cmd: ansible-galaxy install -r requirements.yaml && ansible-playbook -i,localhost playbook.yaml --tags "install_fprime_tools" && rm -f ./*.yaml
