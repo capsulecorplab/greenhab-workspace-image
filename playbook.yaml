@@ -338,6 +338,7 @@
 
   vars:
     pharo_launcher_version: "3.1.1"
+    pharo_version: "10"
 
   tasks:
   - name: Clone PharoLauncher
@@ -350,9 +351,9 @@
       cmd: git checkout {{ pharo_launcher_version }}
       chdir: /opt/pharo-launcher
       executable: /bin/bash
-  - name: Download Pharo 11.0 + VM in pharo-launcher
+  - name: Download Pharo {{ pharo_version }} + VM in pharo-launcher
     shell:
-      cmd: curl https://get.pharo.org/110+vm | bash
+      cmd: curl https://get.pharo.org/{{ pharo_version }}0+vm | bash
       chdir: /opt/pharo-launcher
       executable: /bin/bash
   - name: Rename Pharo.image to PharoLauncher.image
