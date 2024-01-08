@@ -338,7 +338,7 @@
 
   vars:
     pharo_launcher_version: "3.1.1"
-    pharo_version: "10"
+    pharo_version: "11"
 
   tasks:
   - name: Clone PharoLauncher
