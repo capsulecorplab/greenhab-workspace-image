@@ -380,6 +380,11 @@
     shell: ln -sv /home/kasm-default-profile/pharo-launcher/pharo-launcher /usr/local/bin/pharo-launcher
   - name: Configure PharoLauncher desktop shortcut
     shell: echo "[Desktop Entry]\nName=Pharo\nGenericName=Pharo\nExec=pharo-launcher\nIcon=/home/kasm-default-profile/pharo-launcher/icons/pharo-launcher.png\nTerminal=false\nType=Application\nStartupNotify=false\nCategories=Application;Development;" > /usr/share/applications/pharo.desktop
+  - name: Install Roassal with PharoLaucher-CLI
+    shell:
+      cmd: ./pharo PharoLauncher.image clap launcher image create fromRepo --newImageName RoassalPlayground pharo-graphics/Roassal
+      chdir: /home/kasm-default-profile/pharo-launcher
+      executable: /bin/bash
 
 - 
   # install sudo for the vs-code role below 
