@@ -110,6 +110,7 @@
   gather_facts: yes
   tags:
     - install_utilities
+    - install_fprime
     - install_pharo
 
   vars:
@@ -170,6 +171,55 @@
     get_url:
       url: https://gist.githubusercontent.com/capsulecorplab/401ba2fe0857a328f2a626adbf078cc6/raw/b89a6234f0d620ff60bcfe37f95de197b8772377/.gitconfig
       dest: /home/kasm-default-profile/
+
+-
+  # install fprime tools
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  tags:
+    - install_fprime
+
+  vars:
+    fprime_workspace_image_version: v3.4.0-rc1.1.0
+
+  tasks:
+  - name: Get ansible version (in ansible)
+    shell:
+      cmd: ansible --version
+      executable: /bin/bash
+    register: installed_ansible_version
+  - name: Get ansible-playbook version (in ansible)
+    shell:
+      cmd: ansible-playbook --version
+      executable: /bin/bash
+    register: installed_ansible_playbook_version
+  - name: Display ansible version
+    debug:
+      msg: ansible = {{ installed_ansible_version.stdout }}
+  - name: Display ansible-playbook version
+    debug:
+      msg: ansible = {{ installed_ansible_playbook_version.stdout }}
+  - name: Clone fprime-workspace-image
+    shell:
+      cmd: git clone https://github.com/fprime-community/fprime-workspace-image.git
+      chdir: /home/kasm-default-profile/install_files
+      executable: /bin/bash
+  - name: Checkout {{ fprime_workspace_image_version }} in fprime-workspace-image repo
+    shell:
+      cmd: git checkout {{ fprime_workspace_image_version }}
+      chdir: /home/kasm-default-profile/install_files/fprime-workspace-image
+      executable: /bin/bash
+  - name: Copy contents of fprime-workspace-image/install_files into install_files
+    shell:
+      cmd: cp -rf fprime-workspace-image/install_files/* .
+      chdir: /home/kasm-default-profile/install_files
+      executable: /bin/bash
+  - name: Install fprime tools with ansible-galaxy
+    shell:
+      cmd: ansible-galaxy install -r requirements.yaml && ansible-playbook -i,localhost playbook.yaml --tags "install_fprime_tools" && rm -f ./*.yaml
+      chdir: /home/kasm-default-profile/install_files/fprime-workspace-image
+      executable: /bin/bash
 
 -
   # install PrusaSlicer
