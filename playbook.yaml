@@ -390,6 +390,7 @@
     pharo_launcher_version: "c661cf8e517bf2695fb637aa058d7fab3449107a"
     pharo_version: "10"
     roassal_version: "v1.01b"
+    neocsv_version: "fcffa0bba57b2c8c4624eb356fd29afc9b3dbf4a"
 
   tasks:
   - name: Clone PharoLauncher
@@ -467,6 +468,24 @@
   - name: Load Full Roassal3 package into RoassalPlayground using Metacello
     shell:
       cmd: ./pharo RoassalPlayground.image eval --save "[Metacello new baseline{{ ':' }} 'Roassal3'; repository{{ ':' }} 'gitlocal{{ ':' }}//./pharo-local/iceberg/pharo-graphics/Roassal/src'; load{{ ':' }} 'Full'] on{{ ':' }} MCMergeOrLoadWarning do{{ ':' }} [:warning | warning load ]"
+      chdir: /home/kasm-default-profile/Pharo/images/RoassalPlayground
+      executable: /bin/bash
+  - name: Create directory for svenvc/NeoCSV in RoassalPlayground/pharo-local/iceberg
+    shell:
+      cmd: mkdir svenvc
+      chdir: /home/kasm-default-profile/Pharo/images/RoassalPlayground/pharo-local/iceberg/
+  - name: Clone NeoCSV into RoassalPlayground/pharo-local/iceberg/svenvc
+    shell:
+      cmd: git clone https://github.com/svenvc/NeoCSV.git
+      chdir: /home/kasm-default-profile/Pharo/images/RoassalPlayground/pharo-local/iceberg/svenvc
+  - name: Checkout {{ neocsv_version }} in NeoCSV repo
+    shell:
+      cmd: git checkout {{ neocsv_version }}
+      chdir: /home/kasm-default-profile/Pharo/images/RoassalPlayground/pharo-local/iceberg/svenvc/NeoCSV
+      executable: /bin/bash
+  - name: Load NeoCSV package into RoassalPlayground using Metacello
+    shell:
+      cmd: ./pharo RoassalPlayground.image eval --save "[Metacello new baseline{{ ':' }} 'NeoCSV'; repository{{ ':' }} 'gitlocal{{ ':' }}//./pharo-local/iceberg/svenvc/NeoCSV/repository'; load] on{{ ':' }} MCMergeOrLoadWarning do{{ ':' }} [:warning | warning load ]"
       chdir: /home/kasm-default-profile/Pharo/images/RoassalPlayground
       executable: /bin/bash
 
