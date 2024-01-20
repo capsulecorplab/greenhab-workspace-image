@@ -466,6 +466,11 @@
       cmd: mv Pharo.image RoassalPlayground.image
       chdir: /home/kasm-default-profile/Pharo/images/RoassalPlayground
       executable: /bin/bash
+  - name: Enable PharoDarkTheme in RoassalPlayground
+    shell:
+      cmd: ./pharo RoassalPlayground.image eval --save "PharoDarkTheme beCurrent"
+      chdir: /home/kasm-default-profile/Pharo/images/RoassalPlayground
+      executable: /bin/bash
   - name: Load Full Roassal3 package into RoassalPlayground using Metacello
     shell:
       cmd: ./pharo RoassalPlayground.image eval --save "[Metacello new baseline{{ ':' }} 'Roassal3'; repository{{ ':' }} 'gitlocal{{ ':' }}//./pharo-local/iceberg/pharo-graphics/Roassal/src'; load{{ ':' }} 'Full'] on{{ ':' }} MCMergeOrLoadWarning do{{ ':' }} [:warning | warning load ]"
