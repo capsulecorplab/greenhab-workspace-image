@@ -416,6 +416,11 @@
       cmd: ./pharo PharoLauncher.image eval --save "Metacello new baseline{{ ':' }} 'PharoLauncher'; repository{{ ':' }} 'gitlocal{{ ':' }}//src'; ignoreImage; onConflictUseIncoming; onWarning{{ ':' }} [{{ ':' }}ex | ex load]; load"
       chdir: /home/kasm-default-profile/pharo-launcher
       executable: /bin/bash
+  - name: Enable PharoDarkTheme in PharoLauncher
+    shell:
+      cmd: ./pharo PharoLauncher.image eval --save "PharoDarkTheme beCurrent"
+      chdir: /home/kasm-default-profile/pharo-launcher
+      executable: /bin/bash
   - name: Configure pharo-launcher bash script
     shell: echo "#!/usr/bin/env bash\n/home/kasm-default-profile/pharo-launcher/pharo-ui /home/kasm-default-profile/pharo-launcher/PharoLauncher.image eval 'PharoLauncherApplication openFull'" > /home/kasm-default-profile/install_files/pharo-launcher
   - name: Copy pharo-launcher bash script into /home/kasm-default-profile/pharo-launcher and set to executable
