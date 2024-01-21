@@ -380,15 +380,12 @@
   # Install Pharo
   hosts: localhost
   connection: local
-  environment:
-    PHARO: 110
-    ARCHITECTURE: 64
   tags:
     - install_pharo
 
   vars:
     pharo_launcher_version: "c661cf8e517bf2695fb637aa058d7fab3449107a"
-    pharo_version: "10"
+    pharo_version: "11"
     roassal_version: "v1.01b"
     neocsv_version: "fcffa0bba57b2c8c4624eb356fd29afc9b3dbf4a"
     xmlparser_version: "531f9b7c711c89e51ac54cb878099f5a89bca50e"
@@ -404,7 +401,7 @@
       cmd: git checkout {{ pharo_launcher_version }}
       chdir: /home/kasm-default-profile/pharo-launcher
       executable: /bin/bash
-  - name: Download Pharo {{ pharo_version }} + VM in pharo-launcher
+  - name: Download Pharo {{ pharo_version }} image + vm in pharo-launcher
     shell:
       cmd: curl https://get.pharo.org/{{ pharo_version }}0+vm | bash
       chdir: /home/kasm-default-profile/pharo-launcher
@@ -451,9 +448,9 @@
       cmd: git checkout {{ roassal_version }}
       chdir: /home/kasm-default-profile/Pharo/images/RoassalPlayground/pharo-local/iceberg/pharo-graphics/Roassal
       executable: /bin/bash
-  - name: Download Pharo image + vm into RoassalPlayground
+  - name: Download Pharo {{ pharo_version }} image + vm into RoassalPlayground
     shell:
-      cmd: curl https://get.pharo.org/110+vm | bash
+      cmd: curl https://get.pharo.org/{{ pharo_version }}0+vm | bash
       chdir: /home/kasm-default-profile/Pharo/images/RoassalPlayground
       executable: /bin/bash
   - name: Rename Pharo.changes to RoassalPlayground.changes
