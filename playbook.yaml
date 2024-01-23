@@ -387,6 +387,7 @@
     pharo_launcher_version: "c661cf8e517bf2695fb637aa058d7fab3449107a"
     pharo_version: "11"
     roassal_version: "v1.01b"
+    roassalexporter_version: "v1.0"
     neocsv_version: "fcffa0bba57b2c8c4624eb356fd29afc9b3dbf4a"
     xmlparser_version: "531f9b7c711c89e51ac54cb878099f5a89bca50e"
 
@@ -473,7 +474,7 @@
       cmd: ./pharo RoassalPlayground.image eval --save "PharoDarkTheme beCurrent"
       chdir: /home/kasm-default-profile/Pharo/images/RoassalPlayground
       executable: /bin/bash
-  - name: Load Full Roassal3 package into RoassalPlayground using Metacello
+  - name: Load Full Roassal3 package from local repo into RoassalPlayground using Metacello
     shell:
       cmd: ./pharo RoassalPlayground.image eval --save "[Metacello new baseline{{ ':' }} 'Roassal3'; repository{{ ':' }} 'gitlocal{{ ':' }}//./pharo-local/iceberg/pharo-graphics/Roassal/src'; load{{ ':' }} 'Full'] on{{ ':' }} MCMergeOrLoadWarning do{{ ':' }} [:warning | warning load ]"
       chdir: /home/kasm-default-profile/Pharo/images/RoassalPlayground
@@ -491,7 +492,7 @@
       cmd: git checkout {{ neocsv_version }}
       chdir: /home/kasm-default-profile/Pharo/images/RoassalPlayground/pharo-local/iceberg/svenvc/NeoCSV
       executable: /bin/bash
-  - name: Load NeoCSV package into RoassalPlayground using Metacello
+  - name: Load NeoCSV package from local repo into RoassalPlayground using Metacello
     shell:
       cmd: ./pharo RoassalPlayground.image eval --save "[Metacello new baseline{{ ':' }} 'NeoCSV'; repository{{ ':' }} 'gitlocal{{ ':' }}//./pharo-local/iceberg/svenvc/NeoCSV/repository'; load] on{{ ':' }} MCMergeOrLoadWarning do{{ ':' }} [:warning | warning load ]"
       chdir: /home/kasm-default-profile/Pharo/images/RoassalPlayground
@@ -505,9 +506,23 @@
       cmd: git checkout {{ xmlparser_version }}
       chdir: /home/kasm-default-profile/Pharo/images/RoassalPlayground/pharo-local/iceberg/pharo-contributions/XML-XMLParser
       executable: /bin/bash
-  - name: Load XMLParser package into RoassalPlayground using Metacello
+  - name: Load XMLParser package from local repo into RoassalPlayground using Metacello
     shell:
       cmd: ./pharo RoassalPlayground.image eval --save "[Metacello new baseline{{ ':' }} 'XMLParser'; repository{{ ':' }} 'gitlocal{{ ':' }}//./pharo-local/iceberg/pharo-contributions/XML-XMLParser/src'; load] on{{ ':' }} MCMergeOrLoadWarning do{{ ':' }} [:warning | warning load ]"
+      chdir: /home/kasm-default-profile/Pharo/images/RoassalPlayground
+      executable: /bin/bash
+  - name: Clone Roassal3Exporters into RoassalPlayground/pharo-local/iceberg/pharo-contributions
+    shell:
+      cmd: git clone https://github.com/ObjectProfile/Roassal3Exporters
+      chdir: /home/kasm-default-profile/Pharo/images/RoassalPlayground/pharo-local/iceberg/pharo-contributions
+  - name: Checkout {{ roassalexporter_version }} in Roassal3Exporters repo
+    shell:
+      cmd: git checkout {{ roassalexporter_version }}
+      chdir: /home/kasm-default-profile/Pharo/images/RoassalPlayground/pharo-local/iceberg/pharo-contributions/Roassal3Exporters
+      executable: /bin/bash
+  - name: Load Roassal3Exporters package from local repo into RoassalPlayground using Metacello
+    shell:
+      cmd: ./pharo RoassalPlayground.image eval --save "[Metacello new baseline{{ ':' }} 'Roassal3Exporters'; repository{{ ':' }} 'gitlocal{{ ':' }}//./pharo-local/iceberg/pharo-contributions/Roassal3Exporters/src'; load] on{{ ':' }} MCMergeOrLoadWarning do{{ ':' }} [:warning | warning load ]"
       chdir: /home/kasm-default-profile/Pharo/images/RoassalPlayground
       executable: /bin/bash
 
