@@ -15,6 +15,12 @@ This repo provides an Immutable-Infrastructure-as-Code (IIaC) workspace for the 
     - [Jupyter Notebook](https://jupyter.org/)
     - [Voilà](https://voila.readthedocs.io/en/stable/index.html)
     - [Pint](https://pint.readthedocs.io/en/stable/)
+- [Pharo Launcher](https://github.com/pharo-project/pharo-launcher) with following [https://pharo.org/web/](Pharo) images
+    - "RoassalPlayground" pre-loaded with
+        - [Roassal3](https://github.com/ObjectProfile/Roassal3) v1.01b
+        - [NeoCSV](https://github.com/svenvc/NeoCSV)
+        - [XMLParser](https://github.com/pharo-contributions/XML-XMLParser)
+        - [Roassal3Exporters](github://ObjectProfile/Roassal3Exporters) v1.0
 - [QOwnNotes](https://www.qownnotes.org/) 23.12.5 (built from source)
 - VS Code with the following extensions (note, auto-updates are disabled)
     - [Python extension by Microsoft](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
