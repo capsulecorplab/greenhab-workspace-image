@@ -41,6 +41,7 @@ This repo provides an Immutable-Infrastructure-as-Code (IIaC) workspace for the 
 
 1. A Bash terminal ([Ubuntu on WSL2](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-11-with-gui-support#2-install-wsl) recommended for Windows users).
 2. [Docker Compose](https://docs.docker.com/compose/install/) ([Docker Desktop](https://docs.docker.com/desktop/) recommended for non-Linux users)
+3. [UDEV Rules for Teensy boards](https://www.pjrc.com/teensy/00-teensy.rules) placed in `/etc/udev/rules.d/00-teensy.rules`. See https://www.pjrc.com/teensy/td_download.html
 
 ## Setup/Installation
 
