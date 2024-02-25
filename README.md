@@ -6,6 +6,13 @@
 
 This repo provides an Immutable-Infrastructure-as-Code (IIaC) workspace for the Mars Desert Research Station (MDRS), based on an Ansible template for [KASM Ubuntu Jammy](https://hub.docker.com/r/kasmweb/core-ubuntu-jammy) images.  The workspace is configured with the following software:
 
+- Node JS Tools
+    - nodejs v20.11.1
+    - npm v10.2.4 (included with nodejs)
+    - npx v10.2.4 (included with nodejs)
+    - yarn v3.5.0
+    - oclif v3.10.0
+    - [cli-njk](https://github.com/elcharitas/cli-njk) v1.0.0
 - git cli
 - [Keychain](https://www.funtoo.org/Keychain)
 - Firefox
