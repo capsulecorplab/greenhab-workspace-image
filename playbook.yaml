@@ -42,6 +42,12 @@
     lineinfile:
       path: "/etc/skel/.profile"
       line: 'export PS1="\[\033[00;32m\][\w]\$\[\033[00m\] "'
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
   # Handlers: the list of handlers that are executed as a notify 
   #           key from a task
@@ -68,6 +74,12 @@
     apt:
       name: build-essential
       update_cache: yes
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # install firefox
@@ -94,6 +106,14 @@
           privacy.trackingprotection.enabled: false
           signon.rememberSignons: false
           datareporting.healthreport.uploadEnabled: false
+
+  tasks:
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
   pre_tasks:
   - name: Update apt packages
@@ -171,6 +191,12 @@
     get_url:
       url: https://gist.githubusercontent.com/capsulecorplab/401ba2fe0857a328f2a626adbf078cc6/raw/b89a6234f0d620ff60bcfe37f95de197b8772377/.gitconfig
       dest: /home/kasm-default-profile/
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # install fprime tools
@@ -220,6 +246,12 @@
       cmd: ansible-galaxy install -r requirements.yaml && ansible-playbook -i,localhost playbook.yaml --tags "install_fprime_tools" && rm -f ./*.yaml
       chdir: /home/kasm-default-profile/install_files/fprime-workspace-image
       executable: /bin/bash
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # install PrusaSlicer
@@ -258,6 +290,12 @@
     fail:
       msg: "prusa-slicer Error: Expected {{ prusaslicer_dir }} | Found {{ installed_prusaslicer_version.stdout }}"
     when: installed_prusaslicer_version.stdout != prusaslicer_dir
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # install OpenSCAD
@@ -286,6 +324,12 @@
     fail:
       msg: "OpenSCAD Version Error: Expected {{ openscad_version }} | Found {{ installed_openscad_version.stdout }}"
     when: installed_openscad_version.stdout != openscad_version
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # install Python packages with pip
@@ -309,6 +353,12 @@
         - notebook
         - voila
         - pint
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # install ASCII Doctor
@@ -348,6 +398,12 @@
     fail:
       msg: "ASCII Doctor Version Error: Expected {{ asciidoctor_version_expected }} | Found {{ installed_asciidoctor_version.stdout }}"
     when: installed_asciidoctor_version.stdout != asciidoctor_version_expected
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # install QOwnNotes
@@ -375,6 +431,12 @@
       cmd: qmake && make
       chdir: /home/kasm-default-profile/install_files/qownnotes-{{ qownnotes_version }}
       executable: /bin/bash
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # Install Pharo
@@ -525,11 +587,18 @@
       cmd: ./pharo RoassalPlayground.image eval --save "[Metacello new baseline{{ ':' }} 'Roassal3Exporters'; repository{{ ':' }} 'gitlocal{{ ':' }}//./pharo-local/iceberg/pharo-contributions/Roassal3Exporters/src'; load] on{{ ':' }} MCMergeOrLoadWarning do{{ ':' }} [:warning | warning load ]"
       chdir: /home/kasm-default-profile/Pharo/images/RoassalPlayground
       executable: /bin/bash
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 - 
   # install sudo for the vs-code role below 
   hosts: localhost
   connection: local
+
   tasks:
   - name: Install Sudo
     apt:
@@ -540,16 +609,29 @@
       path: "/etc/sudoers"
       line: "Defaults        env_keep += \"DONT_PROMPT_WSL_INSTALL\""
     when: wsl2_environment
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
 # add dev user to give vs code somewhere to install extensions
   hosts: localhost
   connection: local
+
   tasks:
   - name: Add dev user
     user:
       name: dev
       uid: 1001
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # install the remainder of the tools
@@ -580,6 +662,14 @@
               },
             "terminal.integrated.defaultProfile.linux": "bash (login)" 
           }  
+
+  tasks:
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # install PlantUML
@@ -632,6 +722,12 @@
     fail:
       msg: "Graphviz Version Error: Expected {{ graphviz_version_expected }} | Found {{ installed_graphviz_version.stderr }}"
     when: installed_graphviz_version.stderr != graphviz_version_expected
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # Copy VS Code changes to kasm-default-profile and lean up (remove) dev user now that vs code is installed
@@ -646,6 +742,12 @@
       name: dev
       state: absent
       remove: yes 
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 # Three dots indicate the end of a YAML document
 ...
