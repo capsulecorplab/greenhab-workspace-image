@@ -646,7 +646,6 @@
           visual_studio_code_extensions:
             - ms-python.python
             - dendron.dendron
-            - foam.foam-vscode
             - eamodio.gitlens
           visual_studio_code_settings_overwrite: yes
           visual_studio_code_settings: {
