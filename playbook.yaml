@@ -207,7 +207,7 @@
     - install_fprime
 
   vars:
-    fprime_workspace_image_version: v3.4.0-rc1.1.0
+    fprime_workspace_image_version: v3.4.0-1.1.0
 
   tasks:
   - name: Get ansible version (in ansible)
