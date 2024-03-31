@@ -59,21 +59,21 @@ jobs:
       - name: Workaround to free up 5GB of space # see https://github.com/actions/runner-images/issues/709#issuecomment-612569242
         run: sudo rm -rf "/usr/local/share/boost" && sudo rm -rf "$AGENT_TOOLSDIRECTORY"
 
-      - name: Show disk usage before build
+      - name: Show disk usage
         run: df -h
 
       - name: Build image
-        uses: docker/build-push-action@v4.0.0
+        uses: docker/build-push-action@v5
         with:
           tags: ${{ steps.docker_meta.outputs.tags }} 
           file: ./Dockerfile
 
-      - name: Show disk usage after build
+      - name: Show disk usage
         run: df -h
 
       - name: Push image
-        uses: docker/build-push-action@v4.0.0
+        uses: docker/build-push-action@v5
         with:
-          push: true
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           file: ./Dockerfile    
