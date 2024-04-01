@@ -218,6 +218,7 @@
     oclif_version: "4.3.6"
     typescript_version: "5.1.3"
     cli_njk_version: "1.0.0"
+    ungit_version: "1.5.25"
 
   tasks:   # Test Node JS Tools versions
   - name: Install Yarn
@@ -243,6 +244,9 @@
   - name: Get cli-njk version
     shell: njk --version
     register: installed_cli_njk_version
+  - name: Get ungit version
+    shell: ungit --version | sed 's/+/ /g' | awk '{print $1'}
+    register: installed_ungit_version
   - name: Display node tool versions
     debug:
       msg: "Node = {{ installed_node_version.stdout }} | npm = {{ installed_npm_version.stdout }} | npx = {{ installed_npx_version.stdout }} | yarn = {{ installed_yarn_version.stdout }}"
@@ -252,6 +256,9 @@
   - name: Display cli-njk version
     debug:
       msg: "cli-njk = {{ installed_cli_njk_version.stdout }}"
+  - name: Display ungit version
+    debug:
+      msg: "ungit = {{ installed_ungit_version.stdout }}"
   - name: Test node version
     fail:
       msg: "NodeJS Version Error: Expected {{ v_node_version }} | Found {{ installed_node_version.stdout }}"
@@ -281,6 +288,10 @@
     fail:
       msg: "cli-njk Version Error: Expected {{ cli_njk_version }} | Found {{ installed_cli_njk_version.stdout }}"
     when: installed_cli_njk_version.stdout != cli_njk_version
+  - name: Test ungit version
+    fail:
+      msg: "ungit Version Error: Expected {{ ungit_version }} | Found {{ installed_ungit_version.stdout }}"
+    when: installed_ungit_version.stdout != ungit_version
 
   roles:
   - role: grzegorznowak.nvm_node
@@ -297,6 +308,8 @@
       version: "{{ typescript_version }}"
     - name: cli-njk
       version: "{{ cli_njk_version }}"
+    - name: ungit
+      version: "{{ ungit_version }}"
 
 -
   # install fprime tools
@@ -746,7 +759,6 @@
           visual_studio_code_extensions:
             - ms-python.python
             - dendron.dendron
-            - eamodio.gitlens
           visual_studio_code_settings_overwrite: yes
           visual_studio_code_settings: {
             "extensions.ignoreRecommendations": true,

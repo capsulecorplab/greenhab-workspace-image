@@ -13,6 +13,7 @@ This repo provides an Immutable-Infrastructure-as-Code (IIaC) workspace for the 
     - yarn v3.5.0
     - oclif v3.10.0
     - [cli-njk](https://github.com/elcharitas/cli-njk) v1.0.0
+    - [ungit](https://github.com/FredrikNoren/ungit) 1.5.25
 - git cli
 - [Keychain](https://www.funtoo.org/Keychain)
 - Firefox
@@ -32,7 +33,6 @@ This repo provides an Immutable-Infrastructure-as-Code (IIaC) workspace for the 
 - VS Code with the following extensions (note, auto-updates are disabled)
     - [Python extension by Microsoft](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
     - [Dendron](https://marketplace.visualstudio.com/items?itemName=dendron.dendron)
-    - [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
 - Artifact Generators
     - [PlantUML](https://plantuml.com/)
         - JDK v11
