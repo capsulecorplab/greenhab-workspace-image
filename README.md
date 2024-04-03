@@ -59,7 +59,7 @@ From a bash terminal,
 
 ```bash
 cd ~
-git clone https://github.com/capsulecorplab/mdrs-workspace-image.git
+git clone https://github.com/mdrs-community/mdrs-workspace-image.git
 ```
 For those unfamiliar, this command will make a local copy of the mdrs-workspace-image repository into the current directory, using the Git source control system.  This step only needs to be done once.
 
