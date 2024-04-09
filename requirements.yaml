@@ -1,5 +1,6 @@
 ---
 # Add Ansible Galaxy Packages here, role_example_hello included to prevent errors in template testing
+- grzegorznowak.nvm_node              # https://galaxy.ansible.com/grzegorznowak/nvm_node
 - irixjp.role_example_hello           # https://galaxy.ansible.com/irixjp/role_example_hello
 - staticdev.firefox                   # https://galaxy.ansible.com/staticdev/firefox
 - gantsign.visual-studio-code         # https://galaxy.ansible.com/gantsign/visual-studio-code

@@ -6,6 +6,14 @@
 
 This repo provides an Immutable-Infrastructure-as-Code (IIaC) workspace for the Mars Desert Research Station (MDRS), based on an Ansible template for [KASM Ubuntu Jammy](https://hub.docker.com/r/kasmweb/core-ubuntu-jammy) images.  The workspace is configured with the following software:
 
+- Node JS Tools
+    - nodejs v20.11.1
+    - npm v10.2.4 (included with nodejs)
+    - npx v10.2.4 (included with nodejs)
+    - yarn v3.5.0
+    - oclif v3.10.0
+    - [cli-njk](https://github.com/elcharitas/cli-njk) v1.0.0
+    - [ungit](https://github.com/FredrikNoren/ungit) 1.5.25
 - git cli
 - [Keychain](https://www.funtoo.org/Keychain)
 - Firefox
@@ -25,8 +33,6 @@ This repo provides an Immutable-Infrastructure-as-Code (IIaC) workspace for the 
 - VS Code with the following extensions (note, auto-updates are disabled)
     - [Python extension by Microsoft](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
     - [Dendron](https://marketplace.visualstudio.com/items?itemName=dendron.dendron)
-    - [Foam](https://marketplace.visualstudio.com/items?itemName=foam.foam-vscode)
-    - [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
 - Artifact Generators
     - [PlantUML](https://plantuml.com/)
         - JDK v11
@@ -35,7 +41,7 @@ This repo provides an Immutable-Infrastructure-as-Code (IIaC) workspace for the 
 - Open Source Hardware tools
     - [PrusaSlicer](https://github.com/prusa3d/PrusaSlicer) 2.7.0
     - [OpenSCAD](https://openscad.org/) 2021.01
-    - [FPrime (tools installed via fprime-workspace-image)](https://github.com/fprime-community/fprime-workspace-image) v3.4.0-rc1.1.0
+    - [FPrime (tools installed via fprime-workspace-image)](https://github.com/fprime-community/fprime-workspace-image) v3.4.0-1.1.0
 
 ## Requirements
 

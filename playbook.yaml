@@ -42,6 +42,12 @@
     lineinfile:
       path: "/etc/skel/.profile"
       line: 'export PS1="\[\033[00;32m\][\w]\$\[\033[00m\] "'
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
   # Handlers: the list of handlers that are executed as a notify 
   #           key from a task
@@ -68,6 +74,12 @@
     apt:
       name: build-essential
       update_cache: yes
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # install firefox
@@ -95,6 +107,14 @@
           signon.rememberSignons: false
           datareporting.healthreport.uploadEnabled: false
 
+  tasks:
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
+
   pre_tasks:
   - name: Update apt packages
     apt:
@@ -114,7 +134,7 @@
     - install_pharo
 
   vars:
-    git_version: "2.43.0"
+    git_version: "2.34.1"
     git_version_to_install: "1:{{ git_version }}-0ppa1~ubuntu22.04.1"
     keychain_version: "2.8.5"
     keychain_version_to_install: "{{ keychain_version }}-2"
@@ -129,7 +149,7 @@
     shell: add-apt-repository ppa:git-core/ppa
   - name: Install git
     apt:
-      name: "git={{ git_version_to_install }}"
+      name: git
   - name: Install Git Bash Completion
     apt:
       name: bash-completion
@@ -171,6 +191,125 @@
     get_url:
       url: https://gist.githubusercontent.com/capsulecorplab/401ba2fe0857a328f2a626adbf078cc6/raw/b89a6234f0d620ff60bcfe37f95de197b8772377/.gitconfig
       dest: /home/kasm-default-profile/
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
+
+-
+  # Install NodeJS Tools
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  tags:
+  - install_node
+  - install_doctools
+
+  vars:
+    node_version: "20.11.1"
+    v_node_version: "v{{ node_version }}"
+    npm_version: "10.2.4"
+    npx_version: "10.2.4"
+    yarn_version: "3.5.0"
+    yo_version: "4.3.1"
+    generator_code_version: "1.7.5"
+    oclif_version: "4.3.6"
+    typescript_version: "5.1.3"
+    cli_njk_version: "1.0.0"
+    ungit_version: "1.5.25"
+
+  tasks:   # Test Node JS Tools versions
+  - name: Install Yarn
+    shell: "corepack enable && corepack prepare yarn@{{ yarn_version }} --activate"
+  - name: Get node version
+    shell: node --version
+    register: installed_node_version
+  - name: Get npm version
+    shell: npm --version
+    register: installed_npm_version
+  - name: Get npx installed version
+    shell: npx --version
+    register: installed_npx_version
+  - name: Get yarn version
+    shell: yarn --version
+    register: installed_yarn_version
+  - name: Get oclif version
+    shell: oclif --version 2>/dev/null | sed 's/\ /\n/g' | grep oclif | sed 's/\///g' | sed 's/[[:alpha:]|(|[:space:]]//g'
+    register: installed_oclif_version
+  - name: Get TypeScript Compiler version
+    shell: tsc --version | sed 's/[[:alpha:]|(|[:space:]]//g'
+    register: installed_tsc_version
+  - name: Get cli-njk version
+    shell: njk --version
+    register: installed_cli_njk_version
+  - name: Get ungit version
+    shell: ungit --version | sed 's/+/ /g' | awk '{print $1'}
+    register: installed_ungit_version
+  - name: Display node tool versions
+    debug:
+      msg: "Node = {{ installed_node_version.stdout }} | npm = {{ installed_npm_version.stdout }} | npx = {{ installed_npx_version.stdout }} | yarn = {{ installed_yarn_version.stdout }}"
+  - name: Display TypeScript Compiler version
+    debug:
+      msg: "tsc = {{ installed_tsc_version.stdout }}"
+  - name: Display cli-njk version
+    debug:
+      msg: "cli-njk = {{ installed_cli_njk_version.stdout }}"
+  - name: Display ungit version
+    debug:
+      msg: "ungit = {{ installed_ungit_version.stdout }}"
+  - name: Test node version
+    fail:
+      msg: "NodeJS Version Error: Expected {{ v_node_version }} | Found {{ installed_node_version.stdout }}"
+    when: installed_node_version.stdout != v_node_version
+  - name: Test npm version
+    fail:
+      msg: "NPM Version Error: Expected {{ npm_version }} | Found {{ installed_npm_version.stdout }}"
+    when: installed_npm_version.stdout != npm_version
+  - name: Test npx version
+    fail:
+      msg: "NPX Version Error: Expected {{ npx_version }} | Found {{ installed_npx_version.stdout }}"
+    when: installed_npx_version.stdout != npx_version
+  - name: Test yarn version
+    fail:
+      msg: "Yarn Version Error: Expected {{ yarn_version }} | Found {{ installed_yarn_version.stdout }}"
+    when: installed_yarn_version.stdout != yarn_version
+  - name: Test oclif version
+    fail:
+      msg: "oclif Version Error: Expected {{ oclif_version }} | Found {{ installed_oclif_version.stdout }}"
+    when: installed_oclif_version.stdout != oclif_version
+    when: installed_yarn_version.stdout != yarn_version
+  - name: Test TypeScript Compiler version
+    fail:
+      msg: "TypeScript Compiler Version Error: Expected {{ typescript_version }} | Found {{ installed_tsc_version.stdout }}"
+    when: installed_tsc_version.stdout != typescript_version
+  - name: Test cli-njk version
+    fail:
+      msg: "cli-njk Version Error: Expected {{ cli_njk_version }} | Found {{ installed_cli_njk_version.stdout }}"
+    when: installed_cli_njk_version.stdout != cli_njk_version
+  - name: Test ungit version
+    fail:
+      msg: "ungit Version Error: Expected {{ ungit_version }} | Found {{ installed_ungit_version.stdout }}"
+    when: installed_ungit_version.stdout != ungit_version
+
+  roles:
+  - role: grzegorznowak.nvm_node
+    nvm_install_script_version: "0.39.3"
+    nvm_node_version: "{{ node_version }}"
+    nvm_install_globally:
+    - name: yo
+      version: "{{ yo_version }}"
+    - name: generator-code
+      version: "{{ generator_code_version }}"
+    - name: oclif
+      version: "{{ oclif_version }}"
+    - name: typescript
+      version: "{{ typescript_version }}"
+    - name: cli-njk
+      version: "{{ cli_njk_version }}"
+    - name: ungit
+      version: "{{ ungit_version }}"
 
 -
   # install fprime tools
@@ -181,7 +320,7 @@
     - install_fprime
 
   vars:
-    fprime_workspace_image_version: v3.4.0-rc1.1.0
+    fprime_workspace_image_version: v3.4.0-1.1.0
 
   tasks:
   - name: Get ansible version (in ansible)
@@ -220,6 +359,12 @@
       cmd: ansible-galaxy install -r requirements.yaml && ansible-playbook -i,localhost playbook.yaml --tags "install_fprime_tools" && rm -f ./*.yaml
       chdir: /home/kasm-default-profile/install_files/fprime-workspace-image
       executable: /bin/bash
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # install PrusaSlicer
@@ -258,6 +403,12 @@
     fail:
       msg: "prusa-slicer Error: Expected {{ prusaslicer_dir }} | Found {{ installed_prusaslicer_version.stdout }}"
     when: installed_prusaslicer_version.stdout != prusaslicer_dir
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # install OpenSCAD
@@ -286,6 +437,12 @@
     fail:
       msg: "OpenSCAD Version Error: Expected {{ openscad_version }} | Found {{ installed_openscad_version.stdout }}"
     when: installed_openscad_version.stdout != openscad_version
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # install Python packages with pip
@@ -309,6 +466,12 @@
         - notebook
         - voila
         - pint
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # install ASCII Doctor
@@ -348,6 +511,12 @@
     fail:
       msg: "ASCII Doctor Version Error: Expected {{ asciidoctor_version_expected }} | Found {{ installed_asciidoctor_version.stdout }}"
     when: installed_asciidoctor_version.stdout != asciidoctor_version_expected
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # install QOwnNotes
@@ -375,6 +544,12 @@
       cmd: qmake && make
       chdir: /home/kasm-default-profile/install_files/qownnotes-{{ qownnotes_version }}
       executable: /bin/bash
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # Install Pharo
@@ -525,11 +700,18 @@
       cmd: ./pharo RoassalPlayground.image eval --save "[Metacello new baseline{{ ':' }} 'Roassal3Exporters'; repository{{ ':' }} 'gitlocal{{ ':' }}//./pharo-local/iceberg/pharo-contributions/Roassal3Exporters/src'; load] on{{ ':' }} MCMergeOrLoadWarning do{{ ':' }} [:warning | warning load ]"
       chdir: /home/kasm-default-profile/Pharo/images/RoassalPlayground
       executable: /bin/bash
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 - 
   # install sudo for the vs-code role below 
   hosts: localhost
   connection: local
+
   tasks:
   - name: Install Sudo
     apt:
@@ -540,16 +722,29 @@
       path: "/etc/sudoers"
       line: "Defaults        env_keep += \"DONT_PROMPT_WSL_INSTALL\""
     when: wsl2_environment
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
 # add dev user to give vs code somewhere to install extensions
   hosts: localhost
   connection: local
+
   tasks:
   - name: Add dev user
     user:
       name: dev
       uid: 1001
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # install the remainder of the tools
@@ -564,8 +759,6 @@
           visual_studio_code_extensions:
             - ms-python.python
             - dendron.dendron
-            - foam.foam-vscode
-            - eamodio.gitlens
           visual_studio_code_settings_overwrite: yes
           visual_studio_code_settings: {
             "extensions.ignoreRecommendations": true,
@@ -580,6 +773,14 @@
               },
             "terminal.integrated.defaultProfile.linux": "bash (login)" 
           }  
+
+  tasks:
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # install PlantUML
@@ -632,6 +833,12 @@
     fail:
       msg: "Graphviz Version Error: Expected {{ graphviz_version_expected }} | Found {{ installed_graphviz_version.stderr }}"
     when: installed_graphviz_version.stderr != graphviz_version_expected
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 -
   # Copy VS Code changes to kasm-default-profile and lean up (remove) dev user now that vs code is installed
@@ -646,6 +853,12 @@
       name: dev
       state: absent
       remove: yes 
+  - name: Get disk usage
+    shell: df -h
+    register: disk_usage
+  - name: Display disk usage
+    debug:
+      msg: "{{ disk_usage.stdout }}"
 
 # Three dots indicate the end of a YAML document
 ...
