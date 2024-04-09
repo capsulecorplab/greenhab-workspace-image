@@ -24,4 +24,50 @@ services:
     privileged: true
     security_opt:
       - seccomp=unconfined
+  kasm2:
+    build: .
+    image: ghcr.io/mdrs-community/mdrs-workspace-image:v0.2.0-rc2
+    ports:
+      - "6902:6901"
+    environment:
+      VNC_PW: password
+    shm_size: '512m'
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    network_mode: bridge
+    volumes:
+      - type: bind
+        source: ./kasm_user2
+        target: /home/kasm-user2
+    devices:
+      - "/dev/ttyACM0"
+      - "/dev/ttyUSB0"
+    device_cgroup_rules:
+      - "c 188:* rmw"
+    privileged: true
+    security_opt:
+      - seccomp=unconfined
+  kasm3:
+    build: .
+    image: ghcr.io/mdrs-community/mdrs-workspace-image:v0.2.0-rc2
+    ports:
+      - "6903:6901"
+    environment:
+      VNC_PW: password
+    shm_size: '512m'
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    network_mode: bridge
+    volumes:
+      - type: bind
+        source: ./kasm_user3
+        target: /home/kasm-user3
+    devices:
+      - "/dev/ttyACM0"
+      - "/dev/ttyUSB0"
+    device_cgroup_rules:
+      - "c 188:* rmw"
+    privileged: true
+    security_opt:
+      - seccomp=unconfined
 ...
