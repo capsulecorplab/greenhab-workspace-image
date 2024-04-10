@@ -26,7 +26,7 @@ services:
       - seccomp=unconfined
   kasm2:
     build: .
-    image: ghcr.io/mdrs-community/mdrs-workspace-image:v0.2.0-rc2
+    image: ghcr.io/mdrs-community/mdrs-workspace-image:v1.0.0
     ports:
       - "6902:6901"
     environment:
@@ -49,7 +49,7 @@ services:
       - seccomp=unconfined
   kasm3:
     build: .
-    image: ghcr.io/mdrs-community/mdrs-workspace-image:v0.2.0-rc2
+    image: ghcr.io/mdrs-community/mdrs-workspace-image:v1.0.0
     ports:
       - "6903:6901"
     environment:
